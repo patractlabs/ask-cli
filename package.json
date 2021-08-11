@@ -1,0 +1,19 @@
+{
+  "name": "ask-cli",
+  "version": "1.0.0",
+  "description": "The command line tool of Ask!",
+  "bin": {
+    "ask-cli": "ask-cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^8.1.0",
+    "fs-extra": "^10.0.0",
+    "terminal-kit": "^2.1.6"
+  }
+}
