@@ -5,10 +5,10 @@ const program = require('commander');
 const chalk = require('chalk');
 const fs = require('fs-extra');
 const path = require('path');
-const spawn = require('cross-spawn');
+const {execute} = require('./utils/executor');
 
 program
-  .argument('<contract>', "Which contract file to be compiled.")
+  .argument('<contract>', "Contract file to be compiled.")
   .option('--debug', 'Compiled to debug code')
   .option('--release', 'Compiled to release code, default');
 
@@ -33,11 +33,7 @@ if (fs.existsSync(buildDir)) {
 }
 fs.mkdirSync(buildDir);
 
-// process.env.PATH = `${process.env.PATH}${
-//   process.platform === 'win32' ? ';' : ':'
-// }${process.cwd()}/node_modules/ask-transform/bin/.bin`;
-
-// // for (let i in contracts) {
+// prepare compile arguments
 const contractName = path.parse(contract).name;
 const cmdArgs = [
   contract,
@@ -46,27 +42,4 @@ const cmdArgs = [
   contractName
 ];
 
-const rs = spawn.sync('ask', cmdArgs, {
-  stdio: 'inherit',
-  cwd: process.cwd(),
-  env: process.env
-});
-
-if (rs.stderr && rs.stderr.length > 0) {
-  let isWarning = false;
-  if (rs.stderr.indexOf('WARNING') !== -1) isWarning = true;
-
-  if (!isWarning) return console.log(chalk.red(`Error: ${rs.stderr}`));
-
-  console.log(chalk.yellow(`Warning: ${rs.stderr}`));
-}
-
-if (rs.error) {
-  console.log(chalk.red(`Error: ${rs.stderr}`));
-  return false;
-}
-
-console.log(rs.stdout);
-// }
-
-console.log('Build assembly target successfully');
+execute('ask', cmdArgs);
