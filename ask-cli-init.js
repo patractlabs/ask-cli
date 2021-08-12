@@ -1,25 +1,35 @@
 #!/usr/bin/env node
 
-const fetch = require('node-fetch');
+const https = require('https');
 const {execute} = require('./utils/executor');
 
-const DepensUrl = "https://github.com/patractlabs/ask-cli/blob/main/depens.json";
+const DepensUrl = "https://raw.githubusercontent.com/patractlabs/ask-cli/main/depens.json";
 
 function install_depens(depens) {
-  console.log(depens);
   const keys = Object.keys(depens);
   let args = ['install'];
-  for (let key in keys) {
+  for (let key of keys) {
     let dep = `${key}@${depens[key]}`;
     args.push(dep);
   }
 
-  execute('npm', args);
+  if (args.length > 1) {
+    execute('npm', args);
+  }
 }
 
-fetch(DepensUrl)
-    .then(res => res.json())
-    .then(depens => install_depens(depens))
-    .catch(e => console.log(e));
+console.log("start to install dependencies: ");
+https.get(DepensUrl, (resp) => {
+  let data = '';
+  resp.on('data', (chunk) => {
+    data += chunk;
+  });
 
+  // complete response has been received.
+  resp.on('end', () => {
+    install_depens(JSON.parse(data));
+  });
 
+}).on("error", (err) => {
+  console.log("Error: " + err.message);
+});

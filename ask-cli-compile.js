@@ -18,8 +18,8 @@ const options = program.opts();
 const contract = path.join(process.cwd(), program.args[0]);
 const releaseMode = options.debug === undefined;
 
-console.log("compiled mode: ", releaseMode);
-console.log('contract: ', contract);
+// console.log("compiled mode: ", releaseMode);
+// console.log('contract: ', contract);
 // to check if `contract` existed or not
 if (!fs.existsSync(contract)) {
   console.log(chalk.red(`Error: '${contract}' is not exist.`));

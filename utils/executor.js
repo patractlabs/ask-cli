@@ -21,7 +21,7 @@ const execute = (cmd, args) => {
     return false;
   }
 
-  console.log(rs.stdout);
+  // console.log(rs.stdout);
 }
 
 module.exports = { execute }
