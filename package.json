@@ -1,5 +1,5 @@
 {
-  "name": "ask-cli",
+  "name": "patractlabs-ask-cli",
   "version": "1.0.0",
   "description": "The command line tool of Ask!",
   "bin": {

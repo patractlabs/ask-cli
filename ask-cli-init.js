@@ -2,7 +2,8 @@
 
 const https = require('https');
 const {execute} = require('./utils/executor');
-
+const fs = require('fs-extra');
+const path = require('path');
 const DepensUrl = "https://raw.githubusercontent.com/patractlabs/ask-cli/main/depens.json";
 
 function install_depens(depens) {
@@ -18,7 +19,16 @@ function install_depens(depens) {
   }
 }
 
-console.log("start to install dependencies: ");
+function create_folders() {
+  const contractsDir = path.join(process.cwd(), 'contracts');
+  if (fs.existsSync(contractsDir)) {
+    fs.emptyDirSync(contractsDir);
+    fs.rmdirSync(contractsDir);
+  }
+  fs.mkdirSync(contractsDir);
+}
+
+console.log("start to install dependencies for ask!: ");
 https.get(DepensUrl, (resp) => {
   let data = '';
   resp.on('data', (chunk) => {
@@ -28,6 +38,7 @@ https.get(DepensUrl, (resp) => {
   // complete response has been received.
   resp.on('end', () => {
     install_depens(JSON.parse(data));
+    create_folders();
   });
 
 }).on("error", (err) => {
