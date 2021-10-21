@@ -28,7 +28,7 @@ function create_folders() {
   fs.mkdirSync(contractsDir);
 }
 
-console.log("start to install dependencies for ask!: ");
+console.log("start to install dependencies for ask! ");
 https.get(DepensUrl, (resp) => {
   let data = '';
   resp.on('data', (chunk) => {
