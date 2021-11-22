@@ -1,6 +1,6 @@
 {
   "name": "pl-ask-cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "The command line tool of Ask!",
   "bin": {
     "ask-cli": "ask-cli.js"
