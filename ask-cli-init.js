@@ -43,7 +43,7 @@ console.log("start to install dependencies for ask! ");
 if (useDefault) {
   let DefaultDeps = {
     "ask-lang": "0.1.0",
-    "ask-transform": "0.0.17"
+    "ask-transform": "0.0.20"
   };
 
   install_depens(DefaultDeps);
